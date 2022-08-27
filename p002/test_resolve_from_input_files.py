@@ -17,12 +17,12 @@ class TestClass(unittest.TestCase):
 
     def test_from_io_txt(self):
 
-        file_path = __file__.rsplit('\\',1)[0]
+        file_path = __file__.rsplit('/',1)[0]
 
-        with open(file_path + '\\input.txt') as f:
+        with open(file_path + '/input.txt') as f:
             input = f.read()
 
-        with open(file_path + '\\output.txt') as g:
+        with open(file_path + '/output.txt') as g:
             output = g.read()
 
         self.assertIO(input, output)
