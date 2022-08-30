@@ -24,31 +24,30 @@ grid = [[i for i in input()] for _ in range(N) ]
 
 
 
-def paint(i,j):
-    grid[i][j] = "."
+def paint(y,x):
+    grid[y][x] = "."
 
-    for ni in [-1, 0, 1]:
-        for nj in [-1, 0, 1]:
-            nx = i + ni
-            ny = j + nj
+    for dy in [-1, 0, 1]:
+        for dx in [-1, 0, 1]:
+            ny = y + dy
+            nx = x + dx
             if (0 <= nx <= M-1) and (0 <= ny <= N-1):
                 if grid[ny][nx] == "w":
-                    print(ny, nx)
                     paint(ny, nx)
 
-def search(i,j):
-    if grid[i][j] == "w":
-        paint(i, j)
+def search(y,x):
+    if grid[y][x] == "w":
+        paint(y, x)
         return 1
     else:
         return 0
 
 cnt = 0
-for i in range(N):
-    for j in range(M):
+for y in range(N):
+    for x in range(M):
         print("-"*30)
-        print(i, j)
+        print(x, y)
         pprint(grid)
-        cnt += search(i, j)
+        cnt += search(y, x)
 
 print(cnt)
