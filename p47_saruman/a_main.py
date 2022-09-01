@@ -23,3 +23,23 @@ N = int(input())
 R = int(input())
 As = [int(item) for item in input().split()]
 
+
+if N == 1:
+    print(As[0])
+else:
+    res = []
+    anchor = 0
+    prev = As[0]
+    for i in As[1:]:
+        print(i, anchor)
+        if anchor == 0 and i - As[0] > R:
+            res.append(prev)
+            anchor = prev
+        
+        if i - anchor > R:
+            res.append(i)
+            anchor = i 
+        prev = i
+
+print(res)
+
