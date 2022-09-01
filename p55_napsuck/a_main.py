@@ -18,26 +18,19 @@ sys.stdin=f
 ##################################
 # %%
 # 以下ペースト可
+from pprint import pprint
 
-N = int(input())
-R = int(input())
-As = [int(item) for item in input().split()]
+N, W = [int(i) for i in input().split()]
+w_max = 1000
+As = [[int(i) for i in input().split()] for _ in range(N)]
 
-res = []
-if N == 1:
-    print(As[0])
-else:
-    anchor = 0
-    prev = As[0]
-    for i in As[1:]:
-        print(i, anchor)
-        if anchor == 0 and i - As[0] > R:
-            res.append(prev)
-            anchor = prev
-        
-        if i - anchor > R:
-            res.append(i)
-            anchor = i 
-        prev = i
+dp = [[0 for _ in range(W+1)] for _ in range(N+1)]
 
-print(res)
+for i in range(N):
+    v, w = As[i]
+    for j in range(W+1):
+        if j + w <= W:
+            dp[i+1][j + w] = max(dp[i][j] + v, dp[i][j])
+        else:
+            dp[i+1][j] = dp[i][j]
+    pprint(dp)
