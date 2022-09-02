@@ -21,16 +21,17 @@ sys.stdin=f
 from pprint import pprint
 
 N, W = [int(i) for i in input().split()]
-w_max = 1000
+w_max = 10000
 As = [[int(i) for i in input().split()] for _ in range(N)]
 
 dp = [[0 for _ in range(W+1)] for _ in range(N+1)]
 
 for i in range(N):
-    v, w = As[i]
+    w, v = As[i]
     for j in range(W+1):
-        if j + w <= W:
-            dp[i+1][j + w] = max(dp[i][j] + v, dp[i][j])
-        else:
+        if w > j:
             dp[i+1][j] = dp[i][j]
+        else:
+            dp[i+1][j] = max(dp[i][j - w] + v, dp[i][j])
     pprint(dp)
+print(dp[-1][-1])
