@@ -29,6 +29,7 @@ for i in range(N):
     w, v = As[i]
     for j in range(W+1):
         if j >= w:
+            # i番目の品物を任意の個数足して良いから、i番目の行の重さw戻った所(i番目のn-1個)を参照する
             dp[i+1][j] = max(dp[i+1][j-w] + v, dp[i][j]) 
         else:
             dp[i+1][j] = dp[i][j]
