@@ -70,7 +70,7 @@ for t, x, y in lines:
                 ans += 1
             else:
                 for j in range(2):
-                    uf.merge(x+j*N, y + (j+1)*N) 
+                    uf.merge(x, y + (j+1)*N) 
     else:
         ans +=1
 
