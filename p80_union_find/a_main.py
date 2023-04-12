@@ -62,17 +62,17 @@ for t, x, y in lines:
             if uf.same(x, y + N) or uf.same(x, y + 2*N):
                 ans += 1
             else:
-                uf.merge(x, y)
-                uf.merge(x + N, y + N)
-                uf.merge(x + 2*N, y + 2*N)
+                for j in range(3):
+                    uf.merge(x+j*N, y+j*N)
+
         else:
             if uf.same(x, y) or uf.same(x + N, y + N) or uf.same(x + 2*N, y + 2*N):
                 ans += 1
             else:
-                uf.merge(x, y + N)
-                uf.merge(x, y + 2*N) 
+                for j in range(2):
+                    uf.merge(x+j*N, y + (j+1)*N) 
     else:
         ans +=1
-        
+
 print(ans)
     
