@@ -5,9 +5,6 @@ import os
 
 file_path = __file__.rsplit('\\',1)[0]
 f=open(file_path + '/input.txt', 'r', encoding="utf-8")
-# inputをフルパスで指定
-# win10でファイルを作るとs-jisで保存されるため、読み込みをutf-8へエンコードする必要あり
-# VScodeでinput file開くとutf8になってるんだけど中身は結局s-jisになっているらしい
 sys.stdin=f
 
 #
@@ -19,4 +16,63 @@ sys.stdin=f
 # %%
 # 以下ペースト可
 
+N, K = [int(item) for item in input().split()]
+lines = [[int(item) for item in input().split()] for _ in range(K)]
 
+
+class UnionFind:
+    def __init__(self, n):
+        self.n = n
+        self.p = [-1] * n
+
+
+    def leader(self, a):
+        while self.p[a] >= 0:
+            a = self.p[a]
+        return a
+
+
+    def merge(self, a, b):
+        x = self.leader(a)
+        y = self.leader(b)
+
+        if x == y:
+            return x
+
+        if self.p[x] > self.p[y]:
+            x, y = y, x
+
+        self.p[x] += self.p[y]
+        self.p[y] = x
+
+        return x
+
+    def same(self, a, b):
+        return self.leader(a) == self.leader(b)
+
+    def size(self, a):
+        return -self.p[self.leader(a)]
+    
+ans = 0
+uf = UnionFind(3*N)
+
+for t, x, y in lines:
+    if 1 <= x <= N and 1 <= y <= N:
+        if t == 1:
+            if uf.same(x, y + N) or uf.same(x, y + 2*N):
+                ans += 1
+            else:
+                uf.merge(x, y)
+                uf.merge(x + N, y + N)
+                uf.merge(x + 2*N, y + 2*N)
+        else:
+            if uf.same(x, y) or uf.same(x + N, y + N) or uf.same(x + 2*N, y + 2*N):
+                ans += 1
+            else:
+                uf.merge(x, y + N)
+                uf.merge(x, y + 2*N) 
+    else:
+        ans +=1
+        
+print(ans)
+    
